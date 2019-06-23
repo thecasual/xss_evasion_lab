@@ -1,0 +1,41 @@
+<html>
+        <!--Required for emoji-->
+        <meta charset="UTF-8">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/swag.css">
+</head>
+
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/main.js"></script>
+
+<!--Modified from https://www.w3schools.com/howto/howto_js_sidenav.asp-->
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/xsschallenge?c=challenge1">Challenge 1</a>
+  <a href="/xsschallenge?c=challenge2">Challenge 2</a>
+  <a href="/xsschallenge?c=challenge3">Challenge 3</a>
+  <a href="/xsschallenge?c=challenge4">Challenge 4</a>
+  <a href="/xsschallenge?c=challenge5">Challenge 5</a>
+  <a href="/xsschallenge?c=challenge6">Challenge 6</a>
+  <a href="/xsschallenge?c=challenge7">Challenge 7</a>
+  <a href="/xsschallenge?c=challenge8">Challenge 8</a>
+  <a href="/xsschallenge?c=challenge9">Challenge 9</a>
+  <a href="/xsschallenge?c=challenge10">Challenge 10</a>
+  <a href="/xsschallenge?c=challenge11">Challenge 11</a>
+  <a href="/xsschallenge?c=challenge12">Challenge 12</a>
+</div>
+<span id="open" style="font-size:30px;cursor:pointer" onclick="openNav()">MENU</span>
+
+<p id="title" align="center"><b>Challenge doesn't exists</b></p>
+<p id="hint" align="center"></p>
+<p id="func" align="center"></p>
+<form>
+    <textarea placeholder="Whatcha got?" rows="1" id="attempt" ></textarea>
+</form>
+<!--Post preg_replace - see javascript-->
+<p align="center" id="sanitizedinput"></p>
+
+
+</html>
