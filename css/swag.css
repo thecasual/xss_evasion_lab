@@ -37,6 +37,13 @@ body {
   color:green;
 }
 
+tr { 
+  color:green;
+}
+
+th {
+  font-weight : bold
+}
 
 #func {
     font-size:200%;
