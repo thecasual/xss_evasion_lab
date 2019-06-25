@@ -11,7 +11,7 @@ $user = $_COOKIE['username'];
 
 //Update score
 $score = [];
-/*foreach ($_COOKIE as $key=>$val) {
+foreach ($_COOKIE as $key=>$val) {
 
     if (strpos($key, 'challenge') !== false) {
         //Completed challenges found
@@ -29,7 +29,7 @@ if(isset($_GET['getscore'])) {
     $scorefile = fopen("scorefile.txt", "r");
     echo fread($scorefile, filesize("scorefile.txt"));
 }
-*/
+
 
 //Add new challenges here!
 if ($challenge == "challenge1") {
