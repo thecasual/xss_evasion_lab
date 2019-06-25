@@ -6,11 +6,8 @@
 <script src="js/score.js"></script>
 <link rel="stylesheet" type="text/css" href="css/swag.css">
 
-<body onLoad="buildHtmlTable('#excelDataTable')">
+<body>
   <table id="excelDataTable" border="1">
   </table>
 </body>
-
-
-
 </html>

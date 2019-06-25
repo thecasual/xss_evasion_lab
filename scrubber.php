@@ -6,6 +6,31 @@ parse_str($_SERVER['QUERY_STRING'], $qparams);
 $challenge = $qparams['c'];
 $attempt = $qparams['a'];
 $replacement = '\;nope\;';
+
+$user = $_COOKIE['username'];
+
+//Update score
+$score = [];
+/*foreach ($_COOKIE as $key=>$val) {
+
+    if (strpos($key, 'challenge') !== false) {
+        //Completed challenges found
+        $challengenum = preg_replace("/[^0-9]/", "", $key );
+        $challengenum = (string)($challengenum) . "0";
+        $score = json_encode(array($user => array('challenge' => "$challengenum")));
+    }
+  }
+
+$scorefile = fopen("scorefile.txt", "w");
+fwrite($scorefile, $score);
+fclose($scorefile);
+
+if(isset($_GET['getscore'])) {
+    $scorefile = fopen("scorefile.txt", "r");
+    echo fread($scorefile, filesize("scorefile.txt"));
+}
+*/
+
 //Add new challenges here!
 if ($challenge == "challenge1") {
     $hint = htmlspecialchars("Gimmie dat <script>alert(\"HACKED\")</script>", ENT_QUOTES, 'UTF-8');
@@ -63,6 +88,8 @@ if ($challenge == "challenge1") {
     $hint = "Can't run javascript here";
     $pattern = '/(alert|#|&|\\\\|eval|fromCharCode|on|x0|\+|img|svg)/i';
 
+} elseif (isset($_GET['getscore'])) {
+    //pass
 } else {
     //Challenge doesn't exists
     throw new exception('WUT! Challenge doesn\'t exists');
@@ -71,10 +98,11 @@ if ($challenge == "challenge1") {
 if(isset($_GET['a'])){
     //If "a" exists then apply the filter and send back
     echo '<p>' . preg_replace($pattern, $replacement, $attempt) . '</p>';
-    echo $challenge;
+    
+    echo '<br>Filter: ' . $challenge;
 }
 
-if(!isset($_GET['a'])) {
+if(!isset($_GET['a']) and !isset($_GET['getscore'])) {
     if(isset($_GET['c'])) {
     //Dynamically update page
     //Init
