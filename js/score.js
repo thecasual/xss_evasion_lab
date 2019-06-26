@@ -1,7 +1,7 @@
 var myList = [
   { "user": "sam", "flag 1": "Captured" },
-  { "user": "ryan", "flag 1": "swimming" },
-  { "user": "rach", "flag 1": "programming" }
+  { "user": "ryan", "flag 1": "Captured" },
+  { "user": "rach", "flag 1": "Captured" }
 ];
 
 $.ajax({
