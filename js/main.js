@@ -65,7 +65,6 @@ function checkCookie() {
     }
   }
 
-
 function initfunc() {
     console.log(document.cookie);
     //checkCookie();
@@ -77,6 +76,7 @@ function initfunc() {
         type : "GET",
         success : function(response) { 
             //Parse JSON and update challenge page
+            console.log(JSON.parse(response));
             var myjson = JSON.parse(response);
             $challenge = myjson.challenge.split("challenge")[1];
             console.log(myjson);

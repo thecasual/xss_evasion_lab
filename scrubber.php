@@ -7,28 +7,98 @@ $challenge = $qparams['c'];
 $attempt = $qparams['a'];
 $replacement = '\;nope\;';
 
-$user = $_COOKIE['username'];
 
 //Update score
 $score = [];
-foreach ($_COOKIE as $key=>$val) {
 
-    if (strpos($key, 'challenge') !== false) {
-        //Completed challenges found
-        $challengenum = preg_replace("/[^0-9]/", "", $key );
-        $challengenum = (string)($challengenum) . "0";
-        $score = json_encode(array($user => array('challenge' => "$challengenum")));
-    }
-  }
-
-$scorefile = fopen("scorefile.txt", "w");
-fwrite($scorefile, $score);
-fclose($scorefile);
 
 if(isset($_GET['getscore'])) {
-    $scorefile = fopen("scorefile.txt", "r");
-    echo fread($scorefile, filesize("scorefile.txt"));
+    if(isset($_COOKIE['username'])){
+        $user = $_COOKIE['username'];
+        foreach ($_COOKIE as $key=>$val) {
+            //echo $key;
+            if (strpos($key, 'challenge') !== false) {
+                //Completed challenges found
+                
+                $challengenum = preg_replace("/[^0-9]/", "", $key );
+                $challengepoints = (string)($challengenum) . "0";
+
+
+                //temp add to json
+                $tempread = file_get_contents('score.json');
+                $json_read = json_decode($tempread, true);
+                //$json_read = json_decode($tempread, true);
+                //$json_read[] = array("user" => "tim", "7" => "Captured");
+                //file_put_contents("score.json", json_encode($json_read));
+
+                //get current score store as json
+                echo json_encode($json_read);
+
+
+                //check if user is already in json
+                /*if($curscore['user'] = $user) {
+                    echo "user found in json";
+                    $found = False;
+                    foreach ($curscore as $key => $value) {
+                        if ($value[$challengenum] == "Captured") { 
+                            echo "already captured" . $challengenum;
+                            $found = True;
+                        }
+                    }
+                    if($found == False);
+                        echo "not found..adding";
+                        $curscore[] = ['name' => $user, $challengenum => "Captured"];
+                        $json = json_encode($curscore);
+                        file_put_contents("score.json",$json);
+                }
+                */
+
+                
+                
+                
+                
+                //print_r($json);
+
+                #$curscore = json_decode(file_get_contents('score.json'), true);
+                #$curscore[] = ["user"=>"test4", $challengenum=>"Captured"];
+                //$myscore = array ("user"=>"test3", $challengenum=>"Captured");
+                //array_push($curscore, $myscore);
+                
+                //file_put_contents("score.json",json_encode($myscore));
+
+                //if($curscore['user'] = "testo") {
+                //    echo "test";
+                //}
+
+
+                //$myscore = array ("user"=>$user, $challengenum=>"Captured");
+                //file_put_contents("score.json",json_encode($curscore));
+
+
+                //$curscore = json_decode(file_get_contents('score.json'), true);
+
+                //echo json_encode($curscore);
+
+
+               
+                //echo json_encode($curscore);
+                //echo $curscore;
+                
+                //echo $user . $challengenum . $challengepoints;
+
+                //echo "test";
+                //echo $user . "challenge" . $challengenum;
+                //$score = json_encode(array($user => array('challenge' => "$challengenum")));
+            }
+        }
+    }
 }
+    //fwrite($scorefile, $score);
+    //fclose($scorefile);
+    //$scorefile = fopen("scorefile.txt", "r");
+    //$scorefile = fopen("scorefile.txt", "w");
+    //echo fread($scorefile, filesize("scorefile.txt"));
+
 
 
 //Add new challenges here!
