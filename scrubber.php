@@ -63,7 +63,24 @@ if(isset($_GET['getscore'])) {
                                 echo "flag exists";
                             } else {
 				//webhook here
-				$msg = "Flag Captured!! " . $challengename . " completed by user " . $user;
+				$msg = "Flag Captured!! " . $challengename . " Completed By " . $user . "\n\nJOIN HERE: http://tn-hq-noc8.ks.touchnet.com\n\nSCOREBOARD: http://tn-hq-noc8.ks.touchnet.com/score";
+				$url = "http://www.example.com";
+
+				$data = array("text" => $msg);
+
+				$options = array(
+				    'http' => array(
+				      'method'  => 'POST',
+				      'content' => json_encode( $data ),
+				      'header'=>  "Content-Type: application/json\r\n" .
+	      	                  "Accept: application/json\r\n"
+       					)
+				  );
+  $context  = stream_context_create( $options );
+  $result = file_get_contents( $url, false, $context );
+  $response = json_decode( $result );
+	
+
 				echo $msg;
                                 echo "no flag";
                                 $json_read[$i][$challengename] = "Captured";
@@ -119,27 +136,27 @@ if(isset($qparams['c'])) {
     } elseif ($challenge == "challenge7") {
         //Escape Characters
         $hint = "Think outside of the jail\cell";
-        $pattern = "/(alert|#|&|\+|src)/i";
+        $pattern = "/(alert|#|&|\+|src|on)/i";
 
     } elseif ($challenge == "challenge8") {
         //Decimal NCR
         $hint = "You have a fraction of a chance";
-        $pattern = '/(alert|x0|\\\\|\+|eval|atob)/i';
+        $pattern = '/(alert|x0|\\\\|\+|eval|atob|on)/i';
 
     } elseif ($challenge == "challenge9") {
         //Hex
         $hint = "Can you encode?";
-        $pattern = '/(alert|#[1-9])/i';
+        $pattern = '/(on|top|alert|#[1-9])/i';
 
     } elseif ($challenge == "challenge10") {
         //From CharCode
         $hint = "Stahp evaling everything";
-        $pattern = '/(eval|#|&|\\\\)/i';
+        $pattern = '/(eval|top|#|&|\\\\)/i';
 
     } elseif ($challenge == "challenge11") {
         //atob
         $hint = "Can you trigger an alert box still?";
-        $pattern = '/(alert|#|&|\\\\|string|fromCharCode)/i';
+        $pattern = '/(alert|#|src|&|\\\\|string|fromCharCode)/i';
 
     } elseif ($challenge == "challenge12") {
         //toString
