@@ -1,8 +1,10 @@
 # XSS EVASION LAB
 
-This lab is vulnerable to various XSS, business logic and client side validation. Do not install this into a production environment. This is for test only.
+This lab is vulnerable to various XSS, business logic and client side validation. Do not install this into a production environment. This is for training only.
 
 # INSTALLATION WITH DOCKER
+
+Steps currently not vetted, but here is a general idea:
 
 ```cd /root
 git clone https://github.com/thecasual/xss_evasion_lab.git
@@ -17,6 +19,6 @@ docker exec -it apache chown -R www-data:www-data /var/www/html
 
 # NOTES
 
-If you are having answers getting a particular challenge completed, let me know and I can provide the answers. They are purposely removed from the source code.
+If you are having issues getting a particular challenge completed, let me know and I can provide the answers (or extra hints). They are purposely removed from the source code.
 
 This is primarly an XSS evasion lab. There are other exploitable items that I will not mention that are more in line with client side validation and business logic.
