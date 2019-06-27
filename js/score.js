@@ -1,3 +1,17 @@
+//This call is fast which requires a refresh
+$.ajax({
+  url : "score.json",
+  cache : false,
+  type : "GET",
+  success : function(response) {
+      myList = response;
+//Filling in challenge page
+  },
+  error : function(xhr) {
+      console.log("really bad error here...");
+  }
+})
+
 $.ajax({
   url : "/scrubber.php?newuser=1337",
   cache : false,
@@ -16,19 +30,6 @@ $.ajax({
   type : "GET",
   success : function(response) { 
       console.log("getting score");
-  },
-  error : function(xhr) {
-      console.log("really bad error here...");
-  }
-}) 
-//This call is fast which requires a refresh
-$.ajax({
-  url : "score.json",
-  cache : false,
-  type : "GET",
-  success : function(response) { 
-      myList = response;
-//Filling in challenge page
   },
   error : function(xhr) {
       console.log("really bad error here...");
