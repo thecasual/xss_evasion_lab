@@ -28,6 +28,8 @@
   <a href="/xsschallenge?c=challenge12">Challenge 12</a>
 </div>
 <span id="open" style="font-size:30px;cursor:pointer" onclick="openNav()">MENU</span>
+<br>
+<a id="challenge" href="/score">Scoreboard</a>
 
 <p id="title" align="center"><b>Challenge doesn't exists</b></p>
 <p id="hint" align="center"></p>

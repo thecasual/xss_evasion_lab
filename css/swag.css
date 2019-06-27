@@ -37,12 +37,27 @@ body {
   color:green;
 }
 
+#challenge {
+  color:green;
+  font-size:125%;
+}
+
+#startchallenge {
+  color:green;
+  font-size:250%;
+}
+
 tr { 
   color:green;
+  font-size:125%;
+  width: 100%;
+}
+table {
+  width:80%;
 }
 
 th {
-  font-weight : bold
+  font-weight : bold;
 }
 
 #func {

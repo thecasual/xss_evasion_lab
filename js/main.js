@@ -26,6 +26,22 @@ $(function() {
 	});
 });
 
+
+function createuser() {
+
+  $.ajax({
+    url : "/scrubber.php?newuser",
+    cache : false,
+    type : "GET",
+    success : function(response) { 
+        console.log("creating user");
+    },
+    error : function(xhr) {
+        console.log("really bad error here...");
+    }
+  }) 
+}
+
 //Only runs on page load
 
 //"Borrowed" from here https://www.w3schools.com/js/js_cookies.asp
@@ -61,13 +77,14 @@ function checkCookie() {
       username = prompt("Please enter your name:", "");
       if (username != "" && username != null) {
         setCookie("username", username, 365);
+        createuser();
       }
     }
   }
 
 function initfunc() {
     console.log(document.cookie);
-    //checkCookie();
+    checkCookie();
     var urlParams = new URLSearchParams(window.location.search);
     var challenge = urlParams.get('c');
     $.ajax({

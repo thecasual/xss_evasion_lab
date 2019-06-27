@@ -1,15 +1,33 @@
-var myList = [
-  { "user": "sam", "flag 1": "Captured" },
-  { "user": "ryan", "flag 1": "Captured" },
-  { "user": "rach", "flag 1": "Captured" }
-];
-
 $.ajax({
-  url : "scrubber.php?getscore=1337",
+  url : "/scrubber.php?newuser=1337",
   cache : false,
   type : "GET",
   success : function(response) { 
-      console.log(response);
+      console.log("getting score");
+  },
+  error : function(xhr) {
+      console.log("really bad error here...");
+  }
+})  
+
+$.ajax({
+  url : "/scrubber.php?getscore=1337",
+  cache : false,
+  type : "GET",
+  success : function(response) { 
+      console.log("getting score");
+  },
+  error : function(xhr) {
+      console.log("really bad error here...");
+  }
+}) 
+//This call is fast which requires a refresh
+$.ajax({
+  url : "score.json",
+  cache : false,
+  type : "GET",
+  success : function(response) { 
+      myList = response;
 //Filling in challenge page
   },
   error : function(xhr) {
@@ -17,18 +35,16 @@ $.ajax({
   }
 }) 
 
-
-
-
-
 // Builds the HTML Table out of myList.
 function buildHtmlTable(selector) {
   var columns = addAllColumnHeaders(myList, selector);
+  console.log(columns);
 
   for (var i = 0; i < myList.length; i++) {
     var row$ = $('<tr/>');
     for (var colIndex = 0; colIndex < columns.length; colIndex++) {
       var cellValue = myList[i][columns[colIndex]];
+      console.log(myList[i]);
       if (cellValue == null) cellValue = "";
       row$.append($('<td/>').html(cellValue));
     }

@@ -12,157 +12,146 @@ $replacement = '\;nope\;';
 $score = [];
 
 
+if(isset($qparams['newuser'])) {
+    $user = $_COOKIE['username'];
+    $tempread = file_get_contents('score.json');
+    $json_read = json_decode($tempread, true);
+
+    for ($i = 0 ; $i < count($json_read); $i++) {       
+        foreach ($json_read[$i] as $key => $value){
+            echo $key . $value;
+            if($key == "user" && $value == $user){
+                exit("user already exists");
+            }
+        }
+    }
+    $json_read[] = array( "user" => $user);
+    file_put_contents("score.json", json_encode($json_read));
+}
+
+
+
 if(isset($_GET['getscore'])) {
     if(isset($_COOKIE['username'])){
         $user = $_COOKIE['username'];
+        
         foreach ($_COOKIE as $key=>$val) {
             //echo $key;
             if (strpos($key, 'challenge') !== false) {
-                //Completed challenges found
                 
-                $challengenum = preg_replace("/[^0-9]/", "", $key );
-                $challengepoints = (string)($challengenum) . "0";
+                //Completed challenges found
+                //echo $key;
+                
+                
 
-
-                //temp add to json
+                //Get current sscores
                 $tempread = file_get_contents('score.json');
                 $json_read = json_decode($tempread, true);
-                //$json_read = json_decode($tempread, true);
-                //$json_read[] = array("user" => "tim", "7" => "Captured");
-                //file_put_contents("score.json", json_encode($json_read));
+                //echo json_encode($json_read);
 
-                //get current score store as json
-                echo json_encode($json_read);
+                
+                $challengename = preg_replace("/challenge/", "Challenge ", $key );
+                for ($i = 0 ; $i < count($json_read); $i++) {
+                    
+                    foreach ($json_read[$i] as $key => $value){
+                        
 
+                        if($key == "user" && $value == $user){
+                            $userfound = True;
+                            echo "user found" . "<br>";
+                            if(!empty($json_read[$i][$challengename])){
+                                echo "flag exists";
+                            } else {
+				//webhook here
+				$msg = "Flag Captured!! " . $challengename . " completed by user " . $user;
+				echo $msg;
+                                echo "no flag";
+                                $json_read[$i][$challengename] = "Captured";
+                                echo json_encode($json_read);
+                                file_put_contents("score.json", json_encode($json_read));
+    
+    
 
-                //check if user is already in json
-                /*if($curscore['user'] = $user) {
-                    echo "user found in json";
-                    $found = False;
-                    foreach ($curscore as $key => $value) {
-                        if ($value[$challengenum] == "Captured") { 
-                            echo "already captured" . $challengenum;
-                            $found = True;
-                        }
+                                #$json_read = array_replace($json_read[$i], $m);
+
+                            }
+                        
+                        }   
                     }
-                    if($found == False);
-                        echo "not found..adding";
-                        $curscore[] = ['name' => $user, $challengenum => "Captured"];
-                        $json = json_encode($curscore);
-                        file_put_contents("score.json",$json);
                 }
-                */
-
                 
-                
-                
-                
-                //print_r($json);
 
-                #$curscore = json_decode(file_get_contents('score.json'), true);
-                #$curscore[] = ["user"=>"test4", $challengenum=>"Captured"];
-                //$myscore = array ("user"=>"test3", $challengenum=>"Captured");
-                //array_push($curscore, $myscore);
-                
-                //file_put_contents("score.json",json_encode($myscore));
-
-                //if($curscore['user'] = "testo") {
-                //    echo "test";
-                //}
-
-
-                //$myscore = array ("user"=>$user, $challengenum=>"Captured");
-                //file_put_contents("score.json",json_encode($curscore));
-
-
-                //$curscore = json_decode(file_get_contents('score.json'), true);
-
-                //echo json_encode($curscore);
-
-
-               
-                //echo json_encode($curscore);
-                //echo $curscore;
-                
-                //echo $user . $challengenum . $challengepoints;
-
-                //echo "test";
-                //echo $user . "challenge" . $challengenum;
-                //$score = json_encode(array($user => array('challenge' => "$challengenum")));
             }
         }
     }
 }
-    //fwrite($scorefile, $score);
-    //fclose($scorefile);
-    //$scorefile = fopen("scorefile.txt", "r");
-    //$scorefile = fopen("scorefile.txt", "w");
-    //echo fread($scorefile, filesize("scorefile.txt"));
-
-
 
 //Add new challenges here!
-if ($challenge == "challenge1") {
-    $hint = htmlspecialchars("Gimmie dat <script>alert(\"HACKED\")</script>", ENT_QUOTES, 'UTF-8');
-    $pattern = '/ezmode/i';
+$qparams['c'];
+if(isset($qparams['c'])) {
+    
+    if ($challenge == "challenge1") {
+        $hint = htmlspecialchars("Gimmie dat <script>alert(\"HACKED\")</script>", ENT_QUOTES, 'UTF-8');
+        $pattern = '/ezmode/i';
 
-} elseif ($challenge == "challenge2") {
-    $hint = "Does case matter?";
-    $pattern = '/<script>/';
+    } elseif ($challenge == "challenge2") {
+        $hint = "Does case matter?";
+        $pattern = '/<script>/';
 
-} elseif ($challenge == "challenge3") {
-    $hint = "Fixed the case issue! Well, can you have spaces?? You tell me.";
-    $pattern = '/<script>/i';
+    } elseif ($challenge == "challenge3") {
+        $hint = "Fixed the case issue! Well, can you have spaces?? You tell me.";
+        $pattern = '/<script>/i';
 
-} elseif ($challenge == "challenge4") {
-    $hint = "No more script tag. Can you run javascript in images?";
-    $pattern = '/script/i';
+    } elseif ($challenge == "challenge4") {
+        $hint = "No more script tag";
+        $pattern = '/script/i';
 
-} elseif ($challenge == "challenge5") {
-    //SVG XSS
-    $hint = "XSS in images? Gotta fix that! What is this silly graphical tag for drawing images?";
-    $pattern = '/(script|img)/i';
+    } elseif ($challenge == "challenge5") {
+        //SVG XSS
+        $hint = "XSS in images? Gotta fix that! What is this silly graphical tag for drawing images?";
+        $pattern = '/(script|img)/i';
 
-} elseif ($challenge == "challenge6") {
-    //Adding characters to form a string
-    $hint = "Enough with this...No more alert ing.";
-    $pattern = '/(alert|#|\\\\|&|atob|src)/i';
+    } elseif ($challenge == "challenge6") {
+        //Adding characters to form a string
+        $hint = "Enough with this...No more alert ing.";
+        $pattern = '/(alert|#|\\\\|&|atob|src)/i';
 
-} elseif ($challenge == "challenge7") {
-    //Escape Characters
-    $hint = "Think outside of the jail\cell";
-    $pattern = "/(alert|#|&|\+|src)/i";
+    } elseif ($challenge == "challenge7") {
+        //Escape Characters
+        $hint = "Think outside of the jail\cell";
+        $pattern = "/(alert|#|&|\+|src)/i";
 
-} elseif ($challenge == "challenge8") {
-    //Decimal NCR
-    $hint = "You have a fraction of a chance";
-    $pattern = '/(alert|x0|\\\\|\+|eval|atob)/i';
+    } elseif ($challenge == "challenge8") {
+        //Decimal NCR
+        $hint = "You have a fraction of a chance";
+        $pattern = '/(alert|x0|\\\\|\+|eval|atob)/i';
 
-} elseif ($challenge == "challenge9") {
-    //Hex
-    $hint = "Can you encode?";
-    $pattern = '/(alert|#[1-9])/i';
+    } elseif ($challenge == "challenge9") {
+        //Hex
+        $hint = "Can you encode?";
+        $pattern = '/(alert|#[1-9])/i';
 
-} elseif ($challenge == "challenge10") {
-    //From CharCode
-    $hint = "Stahp evaling everything";
-    $pattern = '/(eval|#|&|\\\\)/i';
+    } elseif ($challenge == "challenge10") {
+        //From CharCode
+        $hint = "Stahp evaling everything";
+        $pattern = '/(eval|#|&|\\\\)/i';
 
-} elseif ($challenge == "challenge11") {
-    //atob
-    $hint = "Can you trigger an alert box still?";
-    $pattern = '/(alert|#|&|\\\\|string|fromCharCode)/i';
+    } elseif ($challenge == "challenge11") {
+        //atob
+        $hint = "Can you trigger an alert box still?";
+        $pattern = '/(alert|#|&|\\\\|string|fromCharCode)/i';
 
-} elseif ($challenge == "challenge12") {
-    //toString
-    $hint = "Can't run javascript here";
-    $pattern = '/(alert|#|&|\\\\|eval|fromCharCode|on|x0|\+|img|svg)/i';
+    } elseif ($challenge == "challenge12") {
+        //toString
+        $hint = "I won't let you src javascript here";
+        $pattern = '/(alert|#|&|\\\\|eval|fromCharCode|on|x0|\+|img|svg)/i';
 
-} elseif (isset($_GET['getscore'])) {
-    //pass
-} else {
-    //Challenge doesn't exists
-    throw new exception('WUT! Challenge doesn\'t exists');
+    } elseif (isset($_GET['getscore'])) {
+        //pass
+    } else {
+        //Challenge doesn't exists
+        throw new exception('WUT! Challenge doesn\'t exists');
+    }
 }
 
 if(isset($_GET['a'])){
