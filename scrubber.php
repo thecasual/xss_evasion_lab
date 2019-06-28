@@ -63,7 +63,7 @@ if(isset($_GET['getscore'])) {
                                 echo "flag exists";
                             } else {
 				//webhook here
-				$msg = "Flag Captured!! " . $challengename . " Completed By " . $user . "\n\nJOIN HERE: http://tn-hq-noc8.ks.touchnet.com\n\nSCOREBOARD: http://tn-hq-noc8.ks.touchnet.com/score";
+				$msg = "Flag Captured!! " . $challengename . " Completed By " . $user . "\n\nJOIN HERE: http://host\n\nSCOREBOARD: http://host/score";
 				$url = "http://www.example.com";
 
 				$data = array("text" => $msg);
