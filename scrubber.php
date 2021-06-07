@@ -3,8 +3,13 @@
 $qparams = array();
 parse_str($_SERVER['QUERY_STRING'], $qparams);
 
-$challenge = $qparams['c'];
-$attempt = $qparams['a'];
+if(isset($qparams['c'])) {
+	$challenge = $qparams['c'];
+}
+
+if(isset($qparams['a'])) {
+	$attempt = $qparams['a'];
+}
 $replacement = '\;nope\;';
 
 
@@ -68,14 +73,14 @@ if(isset($_GET['getscore'])) {
 
 				$data = array("text" => $msg);
 
-				$options = array(
-				    'http' => array(
-				      'method'  => 'POST',
-				      'content' => json_encode( $data ),
-				      'header'=>  "Content-Type: application/json\r\n" .
-	      	                  "Accept: application/json\r\n"
-       					)
-				  );
+				//$options = array(
+				//    'http' => array(
+				//      'method'  => 'POST',
+				//      'content' => json_encode( $data ),
+				//      'header'=>  "Content-Type: application/json\r\n" .
+	      	                //  "Accept: application/json\r\n"
+       				//	)
+				//  );
   $context  = stream_context_create( $options );
   $result = file_get_contents( $url, false, $context );
   $response = json_decode( $result );
@@ -186,7 +191,7 @@ if(!isset($_GET['a']) and !isset($_GET['getscore'])) {
             'challenge' => "XSS $challenge",
             'hint' => $hint,
             'pattern' => htmlspecialchars($pattern),
-            'replacement' => $replace
+            'replacement' => $replacement
         ];
         echo json_encode($myjson);
     }
